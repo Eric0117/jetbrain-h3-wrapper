@@ -2,7 +2,7 @@
 <idea-plugin>
     <id>com.github.eric0117.jetbrainh3wrapper</id>
     <name>H3 Geo Index Converter</name>
-    <vendor>eric0117</vendor>
+    <vendor email="ksh117@kakao.com">eric0117</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
