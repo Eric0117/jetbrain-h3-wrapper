@@ -1,9 +1,9 @@
 # Geo Data Conversion Tool Documentation
 
 ## Project Overview
-
+<!-- Plugin description -->
 The Geo Data Conversion Tool is a versatile utility for JetBrains IDEs that simplifies working with various geospatial data formats. This tool enables seamless conversion between geographic coordinates, H3 indices, and geometric Point representations, making it an essential companion for developers working with location-based data and spatial analysis.
-
+<!-- Plugin description end -->
 ## Key Features
 
 1. **Coordinates → H3**: Convert latitude/longitude coordinates to Uber's H3 geospatial indexing system
