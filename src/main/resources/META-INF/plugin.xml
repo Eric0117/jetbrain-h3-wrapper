@@ -1,7 +1,7 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <id>com.github.eric0117.jetbrainh3wrapper</id>
-    <name>H3 Geo Index Converter</name>
+    <name>Geo Data Converter</name>
     <vendor email="ksh117@kakao.com">eric0117</vendor>
 
     <depends>com.intellij.modules.platform</depends>
@@ -9,7 +9,7 @@
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="H3 Converter"
+        <toolWindow id="Geo Data Converter"
                     anchor="right"
                     factoryClass="com.github.eric0117.jetbrainh3wrapper.toolWindow.MainToolWindowFactory"/>
     </extensions>

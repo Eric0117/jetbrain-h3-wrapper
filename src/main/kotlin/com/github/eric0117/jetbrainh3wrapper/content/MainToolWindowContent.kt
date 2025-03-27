@@ -44,8 +44,8 @@ class MainToolWindowContent(private val project: Project) {
         // 탭 추가
         tabbedPane.addTab("Coord → H3", coordToH3Converter.createPanel())
         tabbedPane.addTab("H3 → Coord", h3ToCoordConverter.createPanel())
-        tabbedPane.addTab("좌표 → Point", latLngToPointConverter.createPanel())
-        tabbedPane.addTab("Point → 좌표", pointToLatLngConverter.createPanel())
+        tabbedPane.addTab("Coord → Point", latLngToPointConverter.createPanel())
+        tabbedPane.addTab("Point → Coord", pointToLatLngConverter.createPanel())
 
         // 결과 영역
         resultTextArea.isEditable = false
