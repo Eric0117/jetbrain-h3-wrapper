@@ -32,6 +32,8 @@ repositories {
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
 dependencies {
     testImplementation(libs.junit)
+    implementation("com.uber:h3:4.1.1")
+    implementation("org.locationtech.jts:jts-core:1.19.0")
 
     // IntelliJ Platform Gradle Plugin Dependencies Extension - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
     intellijPlatform {
@@ -128,6 +130,12 @@ kover {
 tasks {
     wrapper {
         gradleVersion = providers.gradleProperty("gradleVersion").get()
+    }
+
+    patchPluginXml {
+        changeNotes = """
+            H3 Geo Index Converter 플러그인 초기 버전
+        """
     }
 
     publishPlugin {
