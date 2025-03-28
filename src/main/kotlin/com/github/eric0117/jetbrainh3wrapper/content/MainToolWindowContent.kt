@@ -1,9 +1,6 @@
 package com.github.eric0117.jetbrainh3wrapper.content
 
-import com.github.eric0117.jetbrainh3wrapper.converter.CoordToH3Converter
-import com.github.eric0117.jetbrainh3wrapper.converter.H3ToCoordConverter
-import com.github.eric0117.jetbrainh3wrapper.converter.LatLngToPointConverter
-import com.github.eric0117.jetbrainh3wrapper.converter.PointToLatLngConverter
+import com.github.eric0117.jetbrainh3wrapper.converter.*
 import com.github.eric0117.jetbrainh3wrapper.util.ClipboardUtil
 import com.github.eric0117.jetbrainh3wrapper.util.BrowserUtil
 import com.intellij.openapi.project.Project
@@ -13,12 +10,10 @@ import com.uber.h3core.H3Core
 import java.awt.BorderLayout
 import java.awt.FlowLayout
 import javax.swing.*
-import org.locationtech.jts.geom.*
 
 class MainToolWindowContent(private val project: Project) {
     // 공통 객체
     val h3Core: H3Core = H3Core.newInstance()
-    val geoFactory = GeometryFactory(PrecisionModel(), 4326)
 
     // UI 구성요소
     private val mainPanel = JPanel(BorderLayout())
@@ -33,8 +28,7 @@ class MainToolWindowContent(private val project: Project) {
     // 변환기 컴포넌트
     private val coordToH3Converter = CoordToH3Converter(this)
     private val h3ToCoordConverter = H3ToCoordConverter(this)
-    private val latLngToPointConverter = LatLngToPointConverter(this)
-    private val pointToLatLngConverter = PointToLatLngConverter(this)
+    private val mapCoordinateSelector = MapCoordinateSelector(this)
 
     init {
         setupUI()
@@ -44,8 +38,7 @@ class MainToolWindowContent(private val project: Project) {
         // 탭 추가
         tabbedPane.addTab("Coord → H3", coordToH3Converter.createPanel())
         tabbedPane.addTab("H3 → Coord", h3ToCoordConverter.createPanel())
-        tabbedPane.addTab("Coord → Point", latLngToPointConverter.createPanel())
-        tabbedPane.addTab("Point → Coord", pointToLatLngConverter.createPanel())
+        tabbedPane.addTab("Map marker", mapCoordinateSelector.createPanel())
 
         // 결과 영역
         resultTextArea.isEditable = false

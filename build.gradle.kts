@@ -33,7 +33,6 @@ repositories {
 dependencies {
     testImplementation(libs.junit)
     implementation("com.uber:h3:4.1.1")
-    implementation("org.locationtech.jts:jts-core:1.19.0")
 
     // IntelliJ Platform Gradle Plugin Dependencies Extension - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
     intellijPlatform {
