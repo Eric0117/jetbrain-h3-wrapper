@@ -1,5 +1,6 @@
 package com.github.eric0117.jetbrainh3wrapper.converter
 
+import com.github.eric0117.jetbrainh3wrapper.LanguageBundle
 import com.github.eric0117.jetbrainh3wrapper.content.MainToolWindowContent
 import com.intellij.openapi.ui.ComboBox
 import java.awt.FlowLayout
@@ -16,14 +17,14 @@ class CoordToH3Converter(content: MainToolWindowContent) : BaseConverter(content
         val panel = JPanel(GridLayout(3, 2, 5, 5))
         panel.border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
 
-        panel.add(JLabel("Coord (lat, lng):"))
+        panel.add(JLabel(LanguageBundle.message("label.coord")))
         panel.add(coordTextField)
 
-        panel.add(JLabel("Resolution (0-15):"))
+        panel.add(JLabel(LanguageBundle.message("label.resolution")))
         panel.add(resolutionComboBox)
 
         val buttonPanel = JPanel(FlowLayout(FlowLayout.RIGHT))
-        val convertButton = JButton("Convert to H3 Index")
+        val convertButton = JButton(LanguageBundle.message("button.convertToH3"))
         convertButton.addActionListener {
             convert()
         }
@@ -52,16 +53,16 @@ class CoordToH3Converter(content: MainToolWindowContent) : BaseConverter(content
             val h3Index = content.h3Core.latLngToCellAddress(lat, lng, resolution)
 
             val result = StringBuilder()
-            result.appendLine("Input:")
-            result.appendLine("- Latitude: $lat")
-            result.appendLine("- Longitude: $lng")
-            result.appendLine("- Resolution: $resolution")
-            result.appendLine("\nResult:")
-            result.appendLine("- H3 Index: $h3Index")
+            result.appendLine(LanguageBundle.message("result.inputText"))
+            result.appendLine(LanguageBundle.message("result.lat", lat))
+            result.appendLine(LanguageBundle.message("result.lng", lng))
+            result.appendLine(LanguageBundle.message("result.resolution", resolution))
+            result.appendLine("\n${LanguageBundle.message("result.result")}")
+            result.appendLine(LanguageBundle.message("result.h3Index", h3Index))
 
             content.setResult(result.toString(), h3Index.toString())
         } catch (e: Exception) {
-            content.setResult("Convert Error: ${e.message}", "")
+            content.setResult("${LanguageBundle.message("error.convertError")} ${e.message}", "")
         }
     }
 }

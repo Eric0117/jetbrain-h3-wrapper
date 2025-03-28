@@ -1,5 +1,6 @@
 package com.github.eric0117.jetbrainh3wrapper.converter
 
+import com.github.eric0117.jetbrainh3wrapper.LanguageBundle
 import com.github.eric0117.jetbrainh3wrapper.content.MainToolWindowContent
 import javax.swing.JPanel
 
@@ -21,18 +22,18 @@ abstract class BaseConverter(protected val content: MainToolWindowContent) {
             val lng = matcher.group(2).toDouble()
             return Pair(lat, lng)
         } else {
-            throw IllegalArgumentException("This is not a valid coordinate format. Please enter in 'lat,lng' format.")
+            throw IllegalArgumentException(LanguageBundle.message("error.invalidCoord"))
         }
     }
 
     // 좌표 유효성 검사
     protected fun validateCoordinates(lat: Double, lng: Double): String? {
         if (lat < -90 || lat > 90) {
-            return "Error: Latitude must be between -90 and 90."
+            return LanguageBundle.message("error.invalidLat")
         }
 
         if (lng < -180 || lng > 180) {
-            return "Error: Longitude must be between -180 and 180."
+            return LanguageBundle.message("error.invalidLng")
         }
 
         return null

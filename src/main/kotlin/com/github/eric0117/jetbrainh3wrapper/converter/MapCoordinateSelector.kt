@@ -1,5 +1,6 @@
 package com.github.eric0117.jetbrainh3wrapper.converter
 
+import com.github.eric0117.jetbrainh3wrapper.LanguageBundle
 import com.github.eric0117.jetbrainh3wrapper.content.MainToolWindowContent
 import com.intellij.ui.jcef.JBCefJSQuery
 import com.intellij.ui.jcef.JBCefBrowser
@@ -19,8 +20,8 @@ import javax.swing.event.DocumentListener
 class MapCoordinateSelector(content: MainToolWindowContent) : BaseConverter(content) {
     // UI 컴포넌트
     private val browser = JBCefBrowser()
-    private val coordinateField = JTextField()
-    private val statusLabel = JLabel("Click on the map or enter coordinates (lat,lng format)")
+    private val coordinateField = JTextField("")
+    private val statusLabel = JLabel(LanguageBundle.message("label.mapMarker"))
 
     // 자바스크립트 통신을 위한 쿼리 객체
     private val jsQuery = JBCefJSQuery.create(browser as JBCefBrowserBase)
@@ -44,7 +45,7 @@ class MapCoordinateSelector(content: MainToolWindowContent) : BaseConverter(cont
 
         // 입력 패널
         val inputPanel = JPanel(FlowLayout(FlowLayout.LEFT))
-        inputPanel.add(JLabel("Coordinates (lat,lng):"))
+        inputPanel.add(JLabel(LanguageBundle.message("label.coord")))
         inputPanel.add(coordinateField)
 
         // 브라우저 패널
@@ -254,9 +255,9 @@ class MapCoordinateSelector(content: MainToolWindowContent) : BaseConverter(cont
     private fun updateStatusLabel(coordText: String) {
         try {
             val (lat, lng) = parseLatLng(coordText)
-            statusLabel.text = String.format("Selected coordinates: latitude %.6f, longitude %.6f", lat, lng)
+            statusLabel.text = String.format(LanguageBundle.message("result.mapMarker"), lat, lng)
         } catch (e: Exception) {
-            statusLabel.text = "nter coordinates or click on the map (lat,lng format)"
+            statusLabel.text = LanguageBundle.message("error.mapMarkerCoord")
         }
     }
 

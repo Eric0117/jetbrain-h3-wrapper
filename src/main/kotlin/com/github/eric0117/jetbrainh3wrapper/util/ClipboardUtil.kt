@@ -1,5 +1,6 @@
 package com.github.eric0117.jetbrainh3wrapper.util
 
+import com.github.eric0117.jetbrainh3wrapper.LanguageBundle
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
 import javax.swing.JComponent
@@ -10,8 +11,8 @@ class ClipboardUtil {
         if (text.isEmpty()) {
             JOptionPane.showMessageDialog(
                 parentComponent,
-                "No result to copy",
-                "Error",
+                LanguageBundle.message("message.clipboard.dialog1"),
+                LanguageBundle.message("label.error"),
                 JOptionPane.WARNING_MESSAGE
             )
             return
@@ -24,8 +25,8 @@ class ClipboardUtil {
         // 사용자에게 복사 완료 알림
         JOptionPane.showMessageDialog(
             parentComponent,
-            "Copied to clipboard: $text",
-            "Copy complete",
+            LanguageBundle.message("message.clipboard.dialog2", text),
+            LanguageBundle.message("message.clipboard.complete"),
             JOptionPane.INFORMATION_MESSAGE
         )
     }

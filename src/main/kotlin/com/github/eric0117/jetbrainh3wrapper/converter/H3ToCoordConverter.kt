@@ -1,5 +1,6 @@
 package com.github.eric0117.jetbrainh3wrapper.converter
 
+import com.github.eric0117.jetbrainh3wrapper.LanguageBundle
 import com.github.eric0117.jetbrainh3wrapper.content.MainToolWindowContent
 import java.awt.FlowLayout
 import java.awt.GridLayout
@@ -12,11 +13,11 @@ class H3ToCoordConverter(content: MainToolWindowContent) : BaseConverter(content
         val panel = JPanel(GridLayout(2, 2, 5, 5))
         panel.border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
 
-        panel.add(JLabel("H3 Index:"))
+        panel.add(JLabel(LanguageBundle.message("label.h3Index")))
         panel.add(h3IndexTextField)
 
         val buttonPanel = JPanel(FlowLayout(FlowLayout.RIGHT))
-        val convertButton = JButton("Convert to Coord")
+        val convertButton = JButton(LanguageBundle.message("button.convertToCoord"))
         convertButton.addActionListener {
             convert()
         }
@@ -34,23 +35,26 @@ class H3ToCoordConverter(content: MainToolWindowContent) : BaseConverter(content
 
             // H3 인덱스 유효성 확인
             if (!content.h3Core.isValidCell(h3Index)) {
-                content.setResult("Error: Invalid H3 index.", "")
+                content.setResult(LanguageBundle.message("error.invalidH3Index"), "")
                 return
             }
 
             // 좌표 변환
             val geoCoord = content.h3Core.cellToLatLng(h3Index)
-            val resolution = content.h3Core.getResolution(h3Index)
+
+            val lat = "%.10f".format(geoCoord.lat)
+            val lng = "%.10f".format(geoCoord.lng)
 
             val result = StringBuilder()
-            result.appendLine("Input:")
-            result.appendLine("- H3 Index: $h3Index")
-            result.appendLine("\nResult:")
-            result.appendLine("- Coord: ${geoCoord.lat},${geoCoord.lng}")
+            result.appendLine(LanguageBundle.message("result.inputText"))
+            result.appendLine(LanguageBundle.message("result.h3Index", h3Index))
+            result.appendLine("\n${LanguageBundle.message("result.result")}")
+            result.appendLine(LanguageBundle.message("result.coord", lat, lng))
 
-            content.setResult(result.toString(), "${geoCoord.lat},${geoCoord.lng}")
+
+            content.setResult(result.toString(), "$lat,$lng")
         } catch (e: Exception) {
-            content.setResult("Convert Error: ${e.message}", "")
+            content.setResult("${LanguageBundle.message("error.convertError")} ${e.message}", "")
         }
     }
 }

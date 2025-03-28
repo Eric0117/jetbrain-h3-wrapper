@@ -1,5 +1,6 @@
 package com.github.eric0117.jetbrainh3wrapper.content
 
+import com.github.eric0117.jetbrainh3wrapper.LanguageBundle
 import com.github.eric0117.jetbrainh3wrapper.converter.*
 import com.github.eric0117.jetbrainh3wrapper.util.ClipboardUtil
 import com.github.eric0117.jetbrainh3wrapper.util.BrowserUtil
@@ -36,9 +37,9 @@ class MainToolWindowContent(private val project: Project) {
 
     private fun setupUI() {
         // 탭 추가
-        tabbedPane.addTab("Coord → H3", coordToH3Converter.createPanel())
-        tabbedPane.addTab("H3 → Coord", h3ToCoordConverter.createPanel())
-        tabbedPane.addTab("Map marker", mapCoordinateSelector.createPanel())
+        tabbedPane.addTab(LanguageBundle.message("tab.coordToH3"), coordToH3Converter.createPanel())
+        tabbedPane.addTab(LanguageBundle.message("tab.h3ToCoord"), h3ToCoordConverter.createPanel())
+        tabbedPane.addTab(LanguageBundle.message("tab.mapMarker"), mapCoordinateSelector.createPanel())
 
         // 결과 영역
         resultTextArea.isEditable = false
@@ -48,13 +49,13 @@ class MainToolWindowContent(private val project: Project) {
         val buttonPanel = JPanel(FlowLayout(FlowLayout.RIGHT))
 
         // 결과 복사 버튼
-        val copyButton = JButton("Copy to clipboard")
+        val copyButton = JButton(LanguageBundle.message("button.copyToClipboard"))
         copyButton.addActionListener {
             clipboardUtil.copyToClipboard(lastResult, mainPanel)
         }
 
         // 웹 브라우저 열기 버튼
-        val webButton = JButton("View in web")
+        val webButton = JButton(LanguageBundle.message("button.viewInWeb"))
         webButton.addActionListener {
             browserUtil.openInBrowser(tabbedPane.selectedIndex, lastResult, mainPanel)
         }
@@ -78,7 +79,7 @@ class MainToolWindowContent(private val project: Project) {
         mainPanel.add(resultPanel, BorderLayout.CENTER)
 
         // 정보 표시
-        val infoLabel = JLabel("The SWING framework was crafted by Eric")
+        val infoLabel = JLabel(LanguageBundle.message("author"))
         mainPanel.add(infoLabel, BorderLayout.SOUTH)
     }
 
