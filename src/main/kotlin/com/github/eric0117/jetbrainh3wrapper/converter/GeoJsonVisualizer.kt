@@ -13,7 +13,7 @@ import javax.swing.event.DocumentListener
 import java.awt.Dimension
 import java.awt.BorderLayout
 
-class GeoJsonRenderer(content: MainToolWindowContent) : BaseConverter(content) {
+class GeoJsonVisualizer(content: MainToolWindowContent) : BaseConverter(content) {
     private val browser: JBCefBrowser = JBCefBrowser()
     private val statusLabel = JLabel(LanguageBundle.message("geojson.status.ready"))
     private val inputTextArea = JTextArea(8, 50)

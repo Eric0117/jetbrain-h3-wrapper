@@ -11,7 +11,7 @@ import java.awt.FlowLayout
 import java.awt.BorderLayout
 
 
-class GeoJsonCreator(content: MainToolWindowContent) : BaseConverter(content) {
+class GeoJsonGenerator(content: MainToolWindowContent) : BaseConverter(content) {
     private val browser: JBCefBrowser = JBCefBrowser()
     private val statusLabel = JLabel(LanguageBundle.message("map.status.ready"))
 

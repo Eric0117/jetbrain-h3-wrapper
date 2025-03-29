@@ -26,15 +26,15 @@ class MainToolWindowContent(private val project: Project) {
     private val coordToH3Converter = CoordToH3Converter(this)
     private val h3ToCoordConverter = H3ToCoordConverter(this)
     private val mapCoordinateSelector = MapCoordinateSelector(this)
-    private val geoJsonCreator = GeoJsonCreator(this)
-    private val geoJsonRenderer = GeoJsonRenderer(this)
+    private val geoJsonGenerator = GeoJsonGenerator(this)
+    private val geoJsonVisualizer = GeoJsonVisualizer(this)
 
     // 변환기 리스트 (변환기 인덱스를 얻기 위해 사용)
     private val converters = listOf(
         coordToH3Converter,
         h3ToCoordConverter,
         mapCoordinateSelector,
-        geoJsonCreator
+        geoJsonGenerator
     )
 
     init {
@@ -46,8 +46,8 @@ class MainToolWindowContent(private val project: Project) {
         tabbedPane.addTab(LanguageBundle.message("tab.coordToH3"), createConverterPanel(coordToH3Converter))
         tabbedPane.addTab(LanguageBundle.message("tab.h3ToCoord"), createConverterPanel(h3ToCoordConverter))
         tabbedPane.addTab(LanguageBundle.message("tab.mapMarker"), createConverterPanel(mapCoordinateSelector))
-        tabbedPane.addTab(LanguageBundle.message("tab.geoJsonCreator"), createConverterPanel(geoJsonCreator))
-        tabbedPane.addTab(LanguageBundle.message("tab.geoJsonViewer"), createConverterPanel(geoJsonRenderer))
+        tabbedPane.addTab(LanguageBundle.message("tab.geoJsonGenerator"), createConverterPanel(geoJsonGenerator))
+        tabbedPane.addTab(LanguageBundle.message("tab.geoJsonVisualizer"), createConverterPanel(geoJsonVisualizer))
 
         mainPanel.add(tabbedPane, BorderLayout.CENTER)
 
