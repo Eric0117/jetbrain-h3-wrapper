@@ -19,12 +19,10 @@ class MainToolWindowContent(private val project: Project) {
     // UI 구성요소
     private val mainPanel = JPanel(BorderLayout())
     private val tabbedPane = JBTabbedPane()
-    private val resultTextArea = JTextArea(10, 30)
-    private var lastResult: String = ""
 
-    // 유틸리티 객체
-    private val clipboardUtil = ClipboardUtil()
-    private val browserUtil = BrowserUtil()
+    // 유틸리티 객체를 public으로 변경하여 BaseConverter에서 접근 가능하게 함
+    val clipboardUtil = ClipboardUtil()
+    val browserUtil = BrowserUtil()
 
     // 변환기 컴포넌트
     private val coordToH3Converter = CoordToH3Converter(this)
@@ -32,66 +30,45 @@ class MainToolWindowContent(private val project: Project) {
     private val mapCoordinateSelector = MapCoordinateSelector(this)
     private val geoJsonCreator = GeoJsonCreator(this)
 
+    // 변환기 리스트 (변환기 인덱스를 얻기 위해 사용)
+    private val converters = listOf(
+        coordToH3Converter,
+        h3ToCoordConverter,
+        mapCoordinateSelector,
+        geoJsonCreator
+    )
+
     init {
         setupUI()
     }
 
     private fun setupUI() {
         // 탭 추가
-        tabbedPane.addTab(LanguageBundle.message("tab.coordToH3"), coordToH3Converter.createPanel())
-        tabbedPane.addTab(LanguageBundle.message("tab.h3ToCoord"), h3ToCoordConverter.createPanel())
-        tabbedPane.addTab(LanguageBundle.message("tab.mapMarker"), mapCoordinateSelector.createPanel())
-        tabbedPane.addTab(LanguageBundle.message("tab.geoJsonCreator"), geoJsonCreator.createPanel())
+        tabbedPane.addTab(LanguageBundle.message("tab.coordToH3"), createConverterPanel(coordToH3Converter))
+        tabbedPane.addTab(LanguageBundle.message("tab.h3ToCoord"), createConverterPanel(h3ToCoordConverter))
+        tabbedPane.addTab(LanguageBundle.message("tab.mapMarker"), createConverterPanel(mapCoordinateSelector))
+        tabbedPane.addTab(LanguageBundle.message("tab.geoJsonCreator"), createConverterPanel(geoJsonCreator))
 
-        // 결과 영역
-        resultTextArea.isEditable = false
-        val scrollPane = JBScrollPane(resultTextArea)
-
-        // 버튼 패널
-        val buttonPanel = JPanel(FlowLayout(FlowLayout.RIGHT))
-
-        // 결과 복사 버튼
-        val copyButton = JButton(LanguageBundle.message("button.copyToClipboard"))
-        copyButton.addActionListener {
-            clipboardUtil.copyToClipboard(lastResult, mainPanel)
-        }
-
-        // 웹 브라우저 열기 버튼
-        val webButton = JButton(LanguageBundle.message("button.viewInWeb"))
-        webButton.addActionListener {
-            browserUtil.openInBrowser(tabbedPane.selectedIndex, lastResult, mainPanel)
-        }
-
-        // 웹 버튼 표시 제어를 위한 탭 변경 리스너
-        tabbedPane.addChangeListener {
-            val selectedIndex = tabbedPane.selectedIndex
-            // 좌표 -> Point (2번 탭) 또는 Point -> 좌표 (3번 탭)인 경우 웹 버튼 숨김
-            webButton.isVisible = !(selectedIndex == 2 || selectedIndex == 3)
-        }
-
-        buttonPanel.add(webButton)
-        buttonPanel.add(copyButton)
-
-        // 메인 패널 구성
-        val resultPanel = JPanel(BorderLayout())
-        resultPanel.add(scrollPane, BorderLayout.CENTER)
-        resultPanel.add(buttonPanel, BorderLayout.SOUTH)
-
-        mainPanel.add(tabbedPane, BorderLayout.NORTH)
-        mainPanel.add(resultPanel, BorderLayout.CENTER)
+        mainPanel.add(tabbedPane, BorderLayout.CENTER)
 
         // 정보 표시
         val infoLabel = JLabel(LanguageBundle.message("author"))
         mainPanel.add(infoLabel, BorderLayout.SOUTH)
     }
 
+    private fun createConverterPanel(converter: BaseConverter): JPanel {
+        val panel = JPanel(BorderLayout())
+        panel.add(converter.createPanel(), BorderLayout.NORTH)
+        panel.add(converter.resultPanel, BorderLayout.CENTER)
+        return panel
+    }
+
     fun getContent(): JComponent {
         return mainPanel
     }
 
-    // 결과 설정 메서드
-    fun setResult(text: String, result: String) {
-        resultTextArea.text = text
-        lastResult = result
+    // 변환기의 인덱스 가져오기
+    fun getConverterIndex(converter: BaseConverter): Int {
+        return converters.indexOf(converter)
     }
 }

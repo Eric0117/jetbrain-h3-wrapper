@@ -33,6 +33,14 @@ class MapCoordinateSelector(content: MainToolWindowContent) : BaseConverter(cont
     private var lastLat: Double = 37.526886
     private var lastLng: Double = 126.966532
 
+    override fun getConverterIndex(): Int {
+        return content.getConverterIndex(this)
+    }
+
+    override fun showWebButton(): Boolean {
+        return false
+    }
+
     override fun createPanel(): JPanel {
         val panel = JPanel(BorderLayout(10, 10))
         panel.border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
@@ -190,7 +198,7 @@ class MapCoordinateSelector(content: MainToolWindowContent) : BaseConverter(cont
                 val (lat, lng) = parseLatLng(value)
                 lastLat = lat
                 lastLng = lng
-                content.setResult("${lastLat},${lastLng}", "${lastLat},${lastLng}")
+                setResult("${lastLat},${lastLng}", "${lastLat},${lastLng}")
                 null
             } catch (e: Exception) {
                 null
@@ -225,7 +233,7 @@ class MapCoordinateSelector(content: MainToolWindowContent) : BaseConverter(cont
             val error = validateCoordinates(lat, lng)
 
             if (error != null) {
-                content.setResult(error, "")
+                setResult(error, "")
                 // 유효하지 않은 좌표면 상태 라벨만 업데이트
                 statusLabel.text = error
                 return
@@ -236,7 +244,7 @@ class MapCoordinateSelector(content: MainToolWindowContent) : BaseConverter(cont
             lastLng = lng
             updateStatusLabel(text)
 
-            content.setResult("${lastLat},${lastLng}", "${lastLat},${lastLng}")
+            setResult("${lastLat},${lastLng}", "${lastLat},${lastLng}")
 
             // 자바스크립트를 통해 지도 마커 업데이트 (중심 이동 없음)
             browser.cefBrowser.executeJavaScript(
@@ -244,7 +252,7 @@ class MapCoordinateSelector(content: MainToolWindowContent) : BaseConverter(cont
                 browser.cefBrowser.url, 0
             )
         } catch (e: Exception) {
-            e.message?.let { content.setResult(it, "") }
+            e.message?.let { setResult(it, "") }
             // 입력값 파싱 실패는 무시 (아직 입력 중일 수 있음)
         }
     }

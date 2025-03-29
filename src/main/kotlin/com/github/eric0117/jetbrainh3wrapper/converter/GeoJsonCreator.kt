@@ -18,6 +18,13 @@ class GeoJsonCreator(content: MainToolWindowContent) : BaseConverter(content) {
     // 자바스크립트 통신을 위한 쿼리 객체
     private val jsQuery = JBCefJSQuery.create(browser as JBCefBrowserBase)
 
+    override fun getConverterIndex(): Int {
+        return content.getConverterIndex(this)
+    }
+
+    override fun showWebButton(): Boolean {
+        return false
+    }
 
     override fun createPanel(): JPanel {
         val panel = JPanel(BorderLayout())
@@ -85,7 +92,7 @@ class GeoJsonCreator(content: MainToolWindowContent) : BaseConverter(content) {
 
     private fun handleGeoJsonData(geoJsonData: String) {
         try {
-            content.setResult(geoJsonData, geoJsonData)
+            setResult(geoJsonData, geoJsonData)
             updateStatus(LanguageBundle.message("map.status.geoJsonReceived"))
         } catch (e: Exception) {
             updateStatus(LanguageBundle.message("error.processing") + ": " + e.message)
@@ -99,7 +106,7 @@ class GeoJsonCreator(content: MainToolWindowContent) : BaseConverter(content) {
     private fun clearMap() {
         browser.cefBrowser.executeJavaScript("if (window.clearAllLayers) window.clearAllLayers();", browser.cefBrowser.url, 0)
         updateStatus(LanguageBundle.message("map.status.cleared"))
-        content.setResult("", "")
+        setResult("", "")
     }
 
     override fun convert() {

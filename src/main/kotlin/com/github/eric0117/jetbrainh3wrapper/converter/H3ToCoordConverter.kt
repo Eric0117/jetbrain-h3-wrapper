@@ -9,6 +9,14 @@ import javax.swing.*
 class H3ToCoordConverter(content: MainToolWindowContent) : BaseConverter(content) {
     private val h3IndexTextField = JTextField("8830e1ca25fffff")
 
+    override fun getConverterIndex(): Int {
+        return content.getConverterIndex(this)
+    }
+
+    override fun showWebButton(): Boolean {
+        return true
+    }
+
     override fun createPanel(): JPanel {
         val panel = JPanel(GridLayout(2, 2, 5, 5))
         panel.border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
@@ -35,7 +43,7 @@ class H3ToCoordConverter(content: MainToolWindowContent) : BaseConverter(content
 
             // H3 인덱스 유효성 확인
             if (!content.h3Core.isValidCell(h3Index)) {
-                content.setResult(LanguageBundle.message("error.invalidH3Index"), "")
+                setResult(LanguageBundle.message("error.invalidH3Index"), "")
                 return
             }
 
@@ -52,9 +60,9 @@ class H3ToCoordConverter(content: MainToolWindowContent) : BaseConverter(content
             result.appendLine(LanguageBundle.message("result.coord", lat, lng))
 
 
-            content.setResult(result.toString(), "$lat,$lng")
+            setResult(result.toString(), "$lat,$lng")
         } catch (e: Exception) {
-            content.setResult("${LanguageBundle.message("error.convertError")} ${e.message}", "")
+            setResult("${LanguageBundle.message("error.convertError")} ${e.message}", "")
         }
     }
 }

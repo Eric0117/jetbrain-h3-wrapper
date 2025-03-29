@@ -13,6 +13,14 @@ class CoordToH3Converter(content: MainToolWindowContent) : BaseConverter(content
         selectedIndex = 8
     }
 
+    override fun getConverterIndex(): Int {
+        return content.getConverterIndex(this)
+    }
+
+    override fun showWebButton(): Boolean {
+        return true
+    }
+
     override fun createPanel(): JPanel {
         val panel = JPanel(GridLayout(3, 2, 5, 5))
         panel.border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
@@ -45,7 +53,7 @@ class CoordToH3Converter(content: MainToolWindowContent) : BaseConverter(content
             // 값 범위 체크
             val validationError = validateCoordinates(lat, lng)
             if (validationError != null) {
-                content.setResult(validationError, "")
+                setResult(validationError, "")
                 return
             }
 
@@ -60,9 +68,9 @@ class CoordToH3Converter(content: MainToolWindowContent) : BaseConverter(content
             result.appendLine("\n${LanguageBundle.message("result.result")}")
             result.appendLine(LanguageBundle.message("result.h3Index", h3Index))
 
-            content.setResult(result.toString(), h3Index.toString())
+            setResult(result.toString(), h3Index.toString())
         } catch (e: Exception) {
-            content.setResult("${LanguageBundle.message("error.convertError")} ${e.message}", "")
+            setResult("${LanguageBundle.message("error.convertError")} ${e.message}", "")
         }
     }
 }
