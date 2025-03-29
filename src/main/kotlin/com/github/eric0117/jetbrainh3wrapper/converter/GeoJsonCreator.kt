@@ -22,6 +22,10 @@ class GeoJsonCreator(content: MainToolWindowContent) : BaseConverter(content) {
         return content.getConverterIndex(this)
     }
 
+    override fun showClipboardCopyButton(): Boolean {
+        return true
+    }
+
     override fun showWebButton(): Boolean {
         return false
     }

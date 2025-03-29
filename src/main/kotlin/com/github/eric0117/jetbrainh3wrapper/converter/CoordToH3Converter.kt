@@ -17,6 +17,10 @@ class CoordToH3Converter(content: MainToolWindowContent) : BaseConverter(content
         return content.getConverterIndex(this)
     }
 
+    override fun showClipboardCopyButton(): Boolean {
+        return true
+    }
+
     override fun showWebButton(): Boolean {
         return true
     }

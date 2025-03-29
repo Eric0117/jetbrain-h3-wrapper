@@ -5,11 +5,9 @@ import com.github.eric0117.jetbrainh3wrapper.converter.*
 import com.github.eric0117.jetbrainh3wrapper.util.ClipboardUtil
 import com.github.eric0117.jetbrainh3wrapper.util.BrowserUtil
 import com.intellij.openapi.project.Project
-import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.components.JBTabbedPane
 import com.uber.h3core.H3Core
 import java.awt.BorderLayout
-import java.awt.FlowLayout
 import javax.swing.*
 
 class MainToolWindowContent(private val project: Project) {
@@ -29,6 +27,7 @@ class MainToolWindowContent(private val project: Project) {
     private val h3ToCoordConverter = H3ToCoordConverter(this)
     private val mapCoordinateSelector = MapCoordinateSelector(this)
     private val geoJsonCreator = GeoJsonCreator(this)
+    private val geoJsonRenderer = GeoJsonRenderer(this)
 
     // 변환기 리스트 (변환기 인덱스를 얻기 위해 사용)
     private val converters = listOf(
@@ -48,6 +47,7 @@ class MainToolWindowContent(private val project: Project) {
         tabbedPane.addTab(LanguageBundle.message("tab.h3ToCoord"), createConverterPanel(h3ToCoordConverter))
         tabbedPane.addTab(LanguageBundle.message("tab.mapMarker"), createConverterPanel(mapCoordinateSelector))
         tabbedPane.addTab(LanguageBundle.message("tab.geoJsonCreator"), createConverterPanel(geoJsonCreator))
+        tabbedPane.addTab(LanguageBundle.message("tab.geoJsonViewer"), createConverterPanel(geoJsonRenderer))
 
         mainPanel.add(tabbedPane, BorderLayout.CENTER)
 

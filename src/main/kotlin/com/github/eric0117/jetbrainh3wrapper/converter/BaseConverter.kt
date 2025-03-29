@@ -43,11 +43,14 @@ abstract class BaseConverter(protected val content: MainToolWindowContent) {
 
         // 구현 클래스에서 웹 버튼 표시 여부를 결정
         webButton.isVisible = showWebButton()
+        copyButton.isVisible = showClipboardCopyButton()
 
         buttonPanel.add(webButton)
         buttonPanel.add(copyButton)
 
-        resultPanel.add(scrollPane, BorderLayout.CENTER)
+        if (showResultPanel()) {
+            resultPanel.add(scrollPane, BorderLayout.CENTER)
+        }
         resultPanel.add(buttonPanel, BorderLayout.SOUTH)
     }
 
@@ -61,8 +64,13 @@ abstract class BaseConverter(protected val content: MainToolWindowContent) {
     abstract fun createPanel(): JPanel
     abstract fun convert()
 
+    protected open fun showResultPanel(): Boolean = true
+
     // 웹 버튼 표시 여부 (기본값은 true, 필요시 오버라이드)
     protected open fun showWebButton(): Boolean = true
+
+    // 클립보드 복사 버튼 표시 여부 (기본값은 true, 필요시 오버라이드)
+    protected open fun showClipboardCopyButton(): Boolean = true
 
     // 변환기의 인덱스 반환 (웹 브라우저 열기에 사용)
     protected abstract fun getConverterIndex(): Int
