@@ -154,7 +154,7 @@ class MapCoordinateSelector(content: MainToolWindowContent) : BaseConverter(cont
                     
                     // 새 마커 추가
                     marker = L.marker([lat, lng], {icon: customIcon}).addTo(map);
-                    marker.bindPopup('위도: ' + lat.toFixed(10) + '<br>경도: ' + lng.toFixed(10)).openPopup();
+                    marker.bindPopup('${LanguageBundle.message("label.lat")}: ' + lat.toFixed(10) + '<br>${LanguageBundle.message("label.lng")}: ' + lng.toFixed(10)).openPopup();
                 }
                 
                 // 외부(자바)에서 호출할 함수: 마커 설정 및 지도 중심 이동

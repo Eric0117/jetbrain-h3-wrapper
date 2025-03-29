@@ -5,6 +5,8 @@ import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
 import javax.swing.JComponent
 import javax.swing.JOptionPane
+import javax.swing.JScrollPane
+import javax.swing.JTextArea
 
 class ClipboardUtil {
     fun copyToClipboard(text: String, parentComponent: JComponent) {
@@ -22,10 +24,18 @@ class ClipboardUtil {
         val clipboard = Toolkit.getDefaultToolkit().systemClipboard
         clipboard.setContents(stringSelection, null)
 
-        // 사용자에게 복사 완료 알림
+        // 스크롤 가능한 텍스트 영역이 있는 커스텀 다이얼로그
+        val textArea = JTextArea(10, 50)
+        textArea.text = text
+        textArea.isEditable = false
+        textArea.lineWrap = true
+        textArea.wrapStyleWord = true
+
+        val scrollPane = JScrollPane(textArea)
+
         JOptionPane.showMessageDialog(
             parentComponent,
-            LanguageBundle.message("message.clipboard.dialog2", text),
+            scrollPane,
             LanguageBundle.message("message.clipboard.complete"),
             JOptionPane.INFORMATION_MESSAGE
         )

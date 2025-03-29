@@ -30,6 +30,7 @@ class MainToolWindowContent(private val project: Project) {
     private val coordToH3Converter = CoordToH3Converter(this)
     private val h3ToCoordConverter = H3ToCoordConverter(this)
     private val mapCoordinateSelector = MapCoordinateSelector(this)
+    private val geoJsonCreator = GeoJsonCreator(this)
 
     init {
         setupUI()
@@ -40,6 +41,7 @@ class MainToolWindowContent(private val project: Project) {
         tabbedPane.addTab(LanguageBundle.message("tab.coordToH3"), coordToH3Converter.createPanel())
         tabbedPane.addTab(LanguageBundle.message("tab.h3ToCoord"), h3ToCoordConverter.createPanel())
         tabbedPane.addTab(LanguageBundle.message("tab.mapMarker"), mapCoordinateSelector.createPanel())
+        tabbedPane.addTab(LanguageBundle.message("tab.geoJsonCreator"), geoJsonCreator.createPanel())
 
         // 결과 영역
         resultTextArea.isEditable = false
